@@ -1,0 +1,43 @@
+.about-card {
+    max-width: 800px;
+    margin: 0 auto ;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 3rem;
+    border: 1px solid var(--slate-200, #e2e8f0);
+    overflow: hidden;
+    text-align: center;
+}
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+.logo-img {
+    height: 250px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+.logo-img:hover {
+    transform: scale(1.05);
+}
+.handshake-icon {
+    font-size: 3rem;
+    color: var(--brand-yellow, #ffde59);
+    transform: scale(1.2);
+}
+.tagline {
+    font-weight: 500;
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+.content-text {
+    color: #495057;
+    line-height: 1.8;
+}

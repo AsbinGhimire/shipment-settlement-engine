@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathibhara | Nepal's #1 E-Vehicle Company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDeepBlack: "#0f172a",
+                        brandBlue: "#2563eb",
+                        brandGreen: "#16a34a", 
+                        brandLightBg: "#f8fafc",
+                        brandCardWhite: "#ffffff",
+                        brandTextDark: "#1e293b",
+                        brandTextGray: "#64748b",
+                        // Aliases for easier use
+                        body: "#f8fafc",
+                        card: "#ffffff",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 10px; }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes slideShow7 {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      20% {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .slideshow-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      animation: slideShow7 28s infinite;
+    }
+
+    #mobile-nav {
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+      transform-origin: top right;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    #mobile-nav.active {
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .city-tag {
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      background: #fff;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.75rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .city-tag:hover {
+      border-color: #16a34a;
+      color: #16a34a;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="text-brandTextDark font-sans overflow-x-hidden bg-brandLightBg">
+
+  {% include "landingpage/Navbar.html" %}
+
+  <main>
+    {% include 'landingpage/Hero_Home.html' %}
+    {% include 'landingpage/About.html' %}
+    {% include 'landingpage/Service.html' %}
+    {% include 'landingpage/Contact.html' %}
+  </main>
+
+  {% include "landingpage/Footer.html" %}
+
+  <script>
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const closeBtn = document.getElementById("close-menu-btn");
+    const nav = document.getElementById("mobile-nav");
+    const body = document.body;
+
+        // Open Menu
+        if (menuBtn) {
+            menuBtn.addEventListener("click", () => {
+                nav.classList.add("active");
+                body.style.overflow = "hidden"; 
+            });
+        }
+
+        // Close Menu Function
+        const closeMenu = () => {
+            nav.classList.remove("active");
+            body.style.overflow = "auto"; 
+        };
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closeMenu);
+    }
+
+        // Close menu when clicking links
+        document.querySelectorAll("#mobile-nav a").forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+    </script>
+</body>
+
+</html>

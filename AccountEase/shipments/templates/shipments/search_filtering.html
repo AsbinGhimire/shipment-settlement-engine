@@ -1,0 +1,78 @@
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-body py-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-9">
+        <div class="d-flex flex-wrap gap-3 align-items-center">
+          <div style="min-width: 280px">
+            <div class="input-group input-group-sm rounded-pill border overflow-hidden">
+              <span class="input-group-text bg-white border-0">
+                <i class="bi bi-search text-secondary"></i>
+              </span>
+              <input id="invoiceSearch" type="text" class="form-control border-0 shadow-none"
+                placeholder="Search by Invoice / Applicant no.." aria-label="Search invoice number" />
+            </div>
+          </div>
+
+          <div style="min-width: 150px">
+            <select id="statusFilter" class="form-select form-select-sm shadow-sm">
+              <option value="" selected>All Status</option>
+              <option value="settled">Settlement</option>
+              <option value="unsettled">Unsettlement</option>
+            </select>
+          </div>
+
+          <div class="dropdown">
+            <button id="etaToggleBtn" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle shadow-sm"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-calendar-range me-1"></i>
+              ETA Range
+            </button>
+
+            <div class="dropdown-menu p-3" aria-labelledby="etaToggleBtn" style="min-width: 300px">
+              <h6 class="dropdown-header d-flex justify-content-between align-items-center mb-2 p-0">
+                Filter by ETA (DD/MM/YYYY)
+                <button type="button" class="btn-close btn-sm ms-2" aria-label="Close"></button>
+              </h6>
+
+              <div class="row g-2">
+                <div class="col">
+                  <input id="etaStart" type="text" class="form-control form-control-sm" placeholder="From Date" />
+                </div>
+                <div class="col">
+                  <input id="etaEnd" type="text" class="form-control form-control-sm" placeholder="To Date" />
+                </div>
+              </div>
+
+              <small class="text-muted d-block mt-2">
+                Example: 24/12/2025
+              </small>
+              {% comment %}
+              <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-primary btn-sm">
+                  Apply
+                </button>
+              </div>
+              {% endcomment %}
+            </div>
+          </div>
+
+          <button id="clearAllFilters" class="btn btn-sm btn-link text-muted text-decoration-none p-0">
+            <i class="bi bi-arrow-clockwise me-1"></i>Reset Filters
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-3 d-flex justify-content-md-end align-items-center gap-3">
+        <span class="badge rounded-pill bg-light text-secondary fw-semibold py-2 px-3" id="rowCountDisplay">
+          All Records Shown
+        </span>
+
+        {% if perms.shipments.add_shipment %}
+        <a href="{% url 'shipments:add_shipment' %}" class="btn btn-primary btn-sm btn-add-shipment shadow-sm">
+          <i class="bi bi-plus-lg me-1"></i> New Shipment
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

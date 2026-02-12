@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | AccountEase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Auth CSS -->
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col justify-center px-6">
+
+<div class="max-w-md w-full mx-auto">
+
+    <!-- Logo -->
+    <div class="flex justify-center fade-up delay-1">
+        <img src="{% static 'images/logo.png' %}" class="h-56" alt="AccountEase">
+    </div>
+
+    <!-- Heading -->
+    <div class="text-center mb-6 fade-up delay-2">
+        <h1 class="text-3xl font-extrabold text-[#4e2780]">
+            Welcome Back
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Secure login to your account
+        </p>
+    </div>
+
+    <!-- Errors -->
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <div class="mb-4 text-center font-semibold text-red-600 fade-up delay-3">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Form -->
+    <form method="post" class="space-y-6 fade-up delay-3" onsubmit="handleLoginSubmit(this)">
+        {% csrf_token %}
+
+        <!-- Username -->
+        <div class="relative">
+            <i class="fa-regular fa-user absolute left-4 top-1/2 -translate-y-1/2 text-purple-700"></i>
+            <input
+                type="text"
+                name="username"
+                class="input"
+                placeholder="Username or Email"
+                autocomplete="username"
+                required>
+        </div>
+
+        <!-- Password -->
+        <div class="relative">
+            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-purple-700"></i>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                class="input pr-12"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required>
+
+            <button
+                type="button"
+                onclick="togglePassword()"
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#4e2780]">
+                <i id="eyeIcon" class="fa-regular fa-eye"></i>
+            </button>
+        </div>
+
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+
+        <!-- Submit -->
+        <button type="submit" id="loginBtn" class="btn-primary flex items-center justify-center gap-2">
+            <span id="btnText">LOG IN</span>
+            <i id="spinner" class="fa-solid fa-spinner fa-spin hidden"></i>
+        </button>
+    </form>
+
+    <div class="mt-6 text-center fade-up delay-4 flex justify-center items-center gap-6">
+        <a href="{% url 'forgotapp:forgot_pswd' %}"
+            class="text-sm font-semibold text-[#4e2780] hover:underline">
+            Forgot Password?
+        </a>
+        <a href="{% url 'home' %}" 
+            class="text-sm font-semibold text-[#4e2780] hover:underline">
+                Back to Home
+        </a>
+    </div>
+</div>
+
+<footer class="mt-10 text-gray-400 text-sm text-center fade-up delay-4">
+    Accounting Solution by <strong>INFIVITY</strong>
+</footer>
+
+<script src="{% static 'js/auth.js' %}"></script>
+
+</body>
+</html>

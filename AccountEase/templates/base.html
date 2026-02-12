@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>AccountEase | {% block title %}Dashboard{% endblock %}</title>
+
+    <!-- FAVICON (Django correct way) -->
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- CSS -->
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="">
+                <i class="bi bi-box"></i> Account Ease
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav gap-2 me-auto">
+                    {% if perms.shipments.add_shipment %}
+
+                    <li class="nav-item">
+                        <a href="{% url 'shipments:shipment_list' %}"
+                            class="nav-link {% if request.resolver_match.url_name in 'shipment_list shipment_list_user' %}active{% endif %}">
+                            <i class="bi bi-box-seam"></i> Shipments
+                        </a>
+                    </li>
+                    {% if perms.shipments.add_shipment %}
+                    <li class="nav-item">
+                        <a href="{% url 'shipments:add_shipment' %}"
+                            class="nav-link {% if request.resolver_match.url_name == 'add_shipment' %}active{% endif %}">
+                            <i class="bi bi-plus-circle"></i> Add Shipment
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a href="{% url 'shipments:reports' %}"
+                            class="nav-link {% if request.resolver_match.url_name == 'reports' %}active{% endif %}">
+                            <i class="bi bi-bar-chart"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'shipments:clients' %}"
+                            class="nav-link {% if request.resolver_match.url_name == 'clients' %}active{% endif %}">
+                            <i class="bi bi-people"></i> Clients
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'shipments:shipment_list' %}"
+                            class="nav-link {% if request.resolver_match.url_name in 'shipment_list shipment_list_user' %}active{% endif %}">
+                            <i class="bi bi-box-seam"></i> Shipments
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a href="{% url 'shipments:helpline' %}"
+                            class="nav-link {% if request.resolver_match.url_name == 'helpline' %}active{% endif %}">
+                            <i class="bi bi-telephone"></i> Helpline
+                        </a>
+                    </li>
+                </ul>
+
+
+                <div class="dropdown">
+                    <span class="dropdown-toggle dropdown-toggle-user fw-semibold" data-bs-toggle="dropdown"
+                        style="cursor:pointer;">
+                        <i class="bi bi-person-circle"></i>
+                        {{ user.username|capfirst }}
+                    </span>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <h6 class="dropdown-header">{{ user.email|default:user.username }}</h6>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}" id="logout-form">
+                                {% csrf_token %}
+                            </form>
+                            <a class="dropdown-item text-danger" href=""
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle"></i>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="text-center app-footer">
+        © {% now "Y" %} <strong>AccountEase</strong> · Built by <strong>INFIVITY</strong>.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Page-specific JS -->
+    {% block extra_js %}{% endblock %}
+
+    <!-- Global JS -->
+    <script src="{% static 'js/base.js' %}"></script>
+
+</body>
+
+</html>

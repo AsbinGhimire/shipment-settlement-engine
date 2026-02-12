@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Upgrade Required{% endblock %}
+{% block header %}Reports{% endblock %}
+
+{% block content %}
+<div class="text-center py-5 px-4 bg-white rounded-3 border shadow-sm" style="max-width: 700px; margin: auto;">
+    <i class="bi bi-gem" style="font-size: 4rem; color: var(--primary-color);"></i>
+    <h1 class="display-5 mt-4 fw-bold">Unlock Powerful Insights</h1>
+    <p class="lead text-muted mt-3">Advanced reporting and business analytics are premium features.</p>
+    <p>Please upgrade your plan to access detailed financial dashboards and operational efficiency reports to help grow your business.</p>
+    <a href="{% url 'shipments:helpline' %}" class="btn btn-primary btn-lg mt-4">
+        Upgrade Your Plan
+    </a>
+</div>
+{% endblock %}

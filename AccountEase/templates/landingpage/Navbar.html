@@ -1,0 +1,45 @@
+<nav class="bg-brandDeepBlack fixed top-0 w-full z-50 glass">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-2 group cursor-pointer">
+      <div
+        class="w-10 h-10 bg-brandGreen flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-0 transition-transform duration-300 shadow-lg shadow-brandGreen/20">
+        <span class="text-white font-black text-xl">P</span>
+      </div>
+      <div class="text-brandCardWhite text-2xl font-black tracking-tighter uppercase italic">Pathibhara</div>
+    </div>
+
+    <ul class="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest">
+      <li><a href="#home" class="text-brandCardWhite hover:text-brandGreen transition-colors">Home</a></li>
+      <li><a href="#about" class="text-brandCardWhite hover:text-brandGreen transition-colors">About</a></li>
+      <li><a href="#services" class="text-brandCardWhite hover:text-brandGreen transition-colors">Services</a></li>
+      <li><a href="#contact" class="text-brandCardWhite hover:text-brandGreen transition-colors">Contact</a></li>
+      <li>
+        <a href="{% url 'login' %}"
+          class="bg-brandGreen hover:bg-brandDeepBlack text-white px-8 py-2.5 rounded-full transition-all duration-300 shadow-lg shadow-brandGreen/20 inline-block font-black">
+          Login
+        </a>
+      </li>
+    </ul>
+
+    <button id="mobile-menu-btn" class="md:hidden text-brandDeepBlack focus:outline-none p-2">
+      <svg class="w-8 h-8 text-brandCardWhite" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m7 6H4"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-nav"
+    class="fixed inset-0 w-full h-screen bg-white z-[100] flex flex-col items-center justify-center space-y-8 transform scale-0 opacity-0 md:hidden">
+    <button id="close-menu-btn" class="absolute top-6 right-6 text-brandDeepBlack p-2">
+      <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <a href="#home" class="text-2xl font-black text-brandDeepBlack hover:text-brandGreen">Home</a>
+    <a href="#about" class="text-2xl font-black text-brandDeepBlack hover:text-brandGreen">About</a>
+    <a href="#services" class="text-2xl font-black text-brandDeepBlack hover:text-brandGreen">Services</a>
+    <a href="#contact" class="text-2xl font-black text-brandDeepBlack hover:text-brandGreen">Contact</a>
+    <a href="{% url 'login' %}"
+      class="bg-brandGreen text-white px-12 py-4 rounded-full font-black uppercase tracking-widest shadow-xl">Login</a>
+  </div>
+</nav>

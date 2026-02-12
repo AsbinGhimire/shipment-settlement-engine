@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Delete Shipment{% endblock %}
+{% block header %}Delete Shipment{% endblock %}
+
+{% block content %}
+<style>
+/* Delete Confirmation Card */
+.delete-card {
+    max-width: 520px;
+    margin: auto;
+    padding: 1.75rem;
+    border-radius: 14px;
+    background: var(--card-bg, #ffffff);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* Danger Icon */
+.delete-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.12);
+    color: #dc3545;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 1rem;
+}
+
+/* Shipment Details */
+.delete-details {
+    background: var(--soft-bg, #f8f9fa);
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+.delete-details p {
+    margin-bottom: 0.35rem;
+}
+
+/* Buttons */
+.btn-cancel {
+    min-width: 110px;
+}
+
+.btn-danger {
+    min-width: 150px;
+}
+
+/* Dark mode */
+[data-theme="dark"] .delete-card {
+    background: #1e1e1e;
+}
+
+[data-theme="dark"] .delete-details {
+    background: #2a2a2a;
+}
+</style>
+
+<div class="delete-card">
+    <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <div class="delete-icon">
+            <i class="bi bi-trash"></i>
+        </div>
+
+        <h4 class="text-center text-danger fw-semibold">
+            Confirm Shipment Deletion
+        </h4>
+
+        <p class="text-center text-muted mt-2">
+            This action <strong>cannot be undone</strong>.
+            Please confirm before proceeding.
+        </p>
+
+        <div class="delete-details mt-3">
+            <p><strong>Invoice No:</strong> {{ shipment.invoice_no }}</p>
+            <p><strong>Applicant:</strong> {{ shipment.applicant }}</p>
+            <p><strong>Amount:</strong> {{ shipment.amount }} {{ shipment.currency }}</p>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'shipments:shipment_list' %}"
+               class="btn btn-outline-secondary btn-cancel">
+                Cancel
+            </a>
+
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i>
+                Delete Shipment
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

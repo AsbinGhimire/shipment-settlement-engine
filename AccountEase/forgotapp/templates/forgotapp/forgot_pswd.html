@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forgot Password | AccountEase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Auth CSS -->
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col justify-center px-6">
+
+<div class="max-w-md w-full mx-auto">
+
+    <!-- Icon -->
+    <div class="flex justify-center mb-6 fade-up delay-1">
+        <div class="h-20 w-20 flex items-center justify-center rounded-full bg-purple-100">
+            <i class="fa-solid fa-unlock-keyhole text-3xl text-purple-700"></i>
+        </div>
+    </div>
+
+    <!-- Heading -->
+    <div class="text-center mb-10 fade-up delay-2">
+        <h1 class="text-3xl font-extrabold text-[#4e2780] mb-3">Forgot Password?</h1>
+        <p class="text-gray-500 leading-relaxed">
+            Enter your registered email address and we’ll send you a secure OTP to reset your password.
+        </p>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-6 text-center font-semibold text-red-600 fade-up delay-3">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Form -->
+    <form method="post" onsubmit="lockButton('resetBtn', 'Sending OTP...')" class="space-y-6 fade-up delay-3">
+        {% csrf_token %}
+        <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-purple-700"></i>
+            <input type="email" name="email" class="input" placeholder="Email address" required autocomplete="email">
+        </div>
+        <button id="resetBtn" type="submit" class="btn-primary">Send OTP</button>
+        <div id="loading" class="hidden text-center font-semibold text-gray-500">Sending OTP…</div>
+    </form>
+
+    <div class="text-center mt-6 fade-up delay-4">
+        <a href="{% url 'login' %}" class="text-sm font-semibold text-[#4e2780] hover:underline">← Back to Login</a>
+    </div>
+</div>
+
+<footer class="mb-6 text-gray-400 text-sm text-center fade-up delay-4">
+    Accounting Solution by <strong>INFIVITY</strong>
+</footer>
+
+<script src="{% static 'js/auth.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<link href="{% static 'css/shipments.css' %}" rel="stylesheet">
+
+<div class="shipment-container">
+    {% include 'shipments/search_filtering.html' %}
+
+    <div class="table-card mt-4">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Invoice/Applicant</th>
+                        <th>Bank/Ref</th>
+                        <th>Insurance</th>
+                        <th>Amount</th>
+                        <th>Price/Payment</th>
+                        <th>Dispatch/Doc</th>
+                        <th>ETA</th>
+                        <th>Settlement</th>
+                        <th>Customs/PP No</th>
+                        <th>Vanshar/Yatayat</th>
+                        <th class="text-center">Margin Release</th>
+                        <th class="text-center">Chitthi</th>
+                        {% block extra_headers %}{% endblock %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for shipment in shipments %}
+                    <tr>
+                        <td class="text-muted small">{{ forloop.counter }}</td>
+                        <td class="invoice-cell">
+                            {{ shipment.invoice_no }}<br>
+                            <small class="fw-medium text-muted">{{ shipment.applicant }}</small>
+                        </td>
+
+                        <td>
+                            {% if shipment.bank_name == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                            {% elif not shipment.bank_name or shipment.bank_name == "pending" %}<span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% else %}{{ shipment.bank_name }}{% endif %}<br>
+
+                            <small class="text-muted">
+                                {% if shipment.bank_ref_no == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                                {% elif not shipment.bank_ref_no or shipment.bank_ref_no == "pending" %}<span
+                                    style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                    class="badge-pending">pending</span>
+                                {% else %}{{ shipment.bank_ref_no }}{% endif %}
+                            </small>
+                        </td>
+
+                        <td>
+                            {% if shipment.insurance_company == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                            {% elif not shipment.insurance_company or shipment.insurance_company == "pending" %}<span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% else %}{{ shipment.insurance_company }}{% endif %}
+                        </td>
+
+                        <td class="amount-cell">
+                            {% if shipment.amount_display == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                            {% else %}{{ shipment.amount_display }}{% endif %}
+                        </td>
+
+                        <td class="small">
+                            {% if shipment.price_terms == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                            {% elif not shipment.price_terms or shipment.price_terms == "pending" %}<span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% else %}{{ shipment.price_terms }}{% endif %}<br>
+
+                            <small>
+                                {% if shipment.payment_terms == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                                {% elif not shipment.payment_terms or shipment.payment_terms == "pending" %}<span
+                                    style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                    class="badge-pending">pending</span>
+                                {% else %}{{ shipment.payment_terms }}{% endif %}
+                            </small>
+                        </td>
+
+                        <td>
+                            {{ shipment.dispatch_date|date:"d/m/Y"|default_if_none:"pending" }}<br>
+                            <small>
+                                {% if not shipment.doc_received_date %}<span
+                                    style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                    class="badge-pending">pending</span>
+                                {% else %}{{ shipment.doc_received_date|date:"d/m/Y" }}{% endif %}
+                            </small>
+                        </td>
+
+                        <td class="text-primary fw-medium">
+                            {% if not shipment.eta_date %}<span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% else %}{{ shipment.eta_date|date:"d/m/Y" }}{% endif %}
+                        </td>
+                        <td class="settlement-cell">
+                            {% if shipment.settlement_date %}
+                            <span class="badge-modern bg-settled">{{ shipment.settlement_date }}</span>
+                            {% else %}
+                            <span
+                                style="background-color: #fef3c7; color: #92400e; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 0.8em;"
+                                class="badge-pending">Pending</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if not shipment.customs_entry_date %}<span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% else %}{{ shipment.customs_entry_date|date:"d/m/Y" }}{% endif %}<br>
+                            <small>
+                                {% if not shipment.pp_no or shipment.pp_no == "pending" %}<span
+                                    style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                    class="badge-pending">pending</span>
+                                {% else %}{{ shipment.pp_no }}{% endif %}
+                            </small>
+                        </td>
+
+                        <td>
+                            {% if shipment.vanshar == "N/A" %}
+                            <span class="text-danger mb-1">N/A</span>
+
+                            {% elif shipment.vanshar and shipment.vanshar != 'pending' %}
+                            <span class="badge bg-secondary mb-1">{{ shipment.vanshar }}</span>
+                            {% else %}
+                            <span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; display: inline-block; margin-bottom: 4px;"
+                                class="badge-pending d-inline-block mb-1">pending</span>
+                            {% endif %}
+
+                            <div class="small">
+                                {% for yatayat in shipment.yatayats.all %}
+                                <div class="text-muted d-block">
+                                    <i class="bi me-1"></i>
+                                    {% if yatayat.yatayat == "N/A" %}<span class="text-danger fw-bold">N/A</span>
+                                    {% elif not yatayat.yatayat or yatayat.yatayat == "pending" %}<span
+                                        style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                        class="badge-pending">pending</span>
+                                    {% else %}{{ yatayat.yatayat }}{% endif %}
+                                </div>
+                                {% empty %}
+                                <span
+                                    style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                    class="badge-pending">pending</span>
+                                {% endfor %}
+                            </div>
+                        </td>
+
+                        <td class="text-center">
+                            {% if shipment.margin_amount %}
+                            <span class="fw-bold">{{ shipment.currency }} {{ shipment.margin_amount }}</span><br>
+                            {% endif %}
+                            {% if shipment.margin_date %}
+                            <small class="text-muted">{{ shipment.margin_date|date:"d/m/Y" }}</small>
+                            {% else %}
+                            <span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center">
+                            {% if shipment.chitti_count %}
+                            <button class="btn btn-chitti" data-bs-toggle="modal" data-bs-target="#chittiModal"
+                                data-shipment-id="{{ shipment.id }}" data-invoice-no="{{ shipment.invoice_no }}">
+                                <i class="bi bi-paperclip"></i> {{ shipment.chitti_count }}
+                            </button>
+                            {% else %}
+                            <span
+                                style="background-color: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 4px;"
+                                class="badge-pending">pending</span>
+                            {% endif %}
+                        </td>
+
+                        {% block extra_columns %}{% endblock %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12" class="text-center py-5">
+                            <div class="py-4">
+                                <i class="bi bi-inbox fs-1 text-muted d-block mb-3"></i>
+                                <h6 class="text-muted fw-bold">No Records Found</h6>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="chittiModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+            <div class="modal-header bg-slate-900 text-white">
+                <h6 class="modal-title fw-bold" id="modalTitle">Documents</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="chitti-files-list" class="list-group list-group-flush"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+<script src="{% static 'js/shipments.js' %}?v=1.2"></script>
+{% endblock %}

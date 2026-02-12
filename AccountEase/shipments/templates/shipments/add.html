@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Add Shipment{% endblock %}
+{% block header %}Add New Shipment{% endblock %}
+
+{% block content %}
+<div class="shipment-wrapper">
+    <form method="POST" enctype="multipart/form-data" id="shipmentForm" novalidate>
+        {% csrf_token %}
+
+        <!-- ================= Shipment Details ================= -->
+        <div class="form-card">
+            <h5 class="section-title">
+                Shipment Details
+            </h5>
+
+            <div class="row">
+                {% for field in form %}
+                {% if field.name == "amount" %}
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                        <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+
+                    <div class="input-group amount-group">
+                        {{ field }}
+                        {{ form.currency }}
+                    </div>
+
+                    {% if field.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ field.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% elif field.name not in "currency margin_amount margin_date" %}
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                        <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ field.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ================= Margin Release ================= -->
+        <div class="form-card mt-4">
+            <h5 class="section-title">
+                <i class="bi bi-cash-stack"></i> Margin Release
+            </h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Margin Amount</label>
+                    {{ form.margin_amount }}
+                    {% if form.margin_amount.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.margin_amount.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Margin Date</label>
+                    {{ form.margin_date }}
+                    {% if form.margin_date.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.margin_date.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Yatayat & Chitti Files ================= -->
+        <div class="form-card mt-4">
+            <h5 class="section-title">
+                <i class="bi bi-truck"></i> Yatayat & Chitti Details
+            </h5>
+
+            <div id="yatayat-formset-container">
+                {{ yatayat_formset.management_form }}
+
+                {% for form in yatayat_formset %}
+                <div class="file-card">
+                    {{ form.id }}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">{{ form.yatayat.label }}</label>
+                            {{ form.yatayat }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label mb-2">Upload Chitti</label>
+                                {% if yatayat_formset.can_delete %}
+                                <div class="form-check">
+                                    {{ form.DELETE }}
+                                    <label class="form-check-label text-danger small">
+                                        Remove
+                                    </label>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {{ form.chitti_file }}
+                            {% if form.chitti_file.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.chitti_file.errors|join:", " }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="button" class="btn btn-outline-primary add-file-btn" id="add-yatayat-btn">
+                <i class="bi bi-plus-circle"></i> Add Another Yatayat
+            </button>
+        </div>
+
+        <!-- ================= Actions ================= -->
+        <div class="form-actions">
+            <a href="{% url 'shipments:shipment_list' %}" class="btn btn-outline-secondary">
+                Cancel
+            </a>
+
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                <span id="btnText">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Save Shipment
+                </span>
+
+                <span id="btnLoading" class="d-none">
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    Submitting...
+                </span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- ================= Empty Form Template (CORRECT) ================= -->
+<div id="empty-form-template" class="d-none">
+    <div class="file-card">
+        <input type="hidden" name="yatayat-__prefix__-id" id="id_yatayat-__prefix__-id">
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Yatayat Name</label>
+                {{ yatayat_formset.empty_form.yatayat }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label mb-2">Upload Chitti</label>
+                    <div class="form-check">
+                        <input type="checkbox" name="yatayat-__prefix__-DELETE" id="id_yatayat-__prefix__-DELETE"
+                            class="form-check-input">
+                        <label class="form-check-label text-danger small">
+                            Remove
+                        </label>
+                    </div>
+                </div>
+                <input type="file" name="yatayat-__prefix__-chitti_file" class="form-control"
+                    id="id_yatayat-__prefix__-chitti_file">
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="{% static 'css/shipment_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+
+<!-- Custom Form Logic -->
+<script src="{% static 'js/shipment_form.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}About Our Partnership{% endblock %}
+{% block header %}About Us{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link href="{% static 'css/clients.css' %}" rel="stylesheet">
+
+<div class="about-card">
+    <div class="logo-container">
+        <!-- AccountEase Logo -->
+        <img src="/static/images/logo.png" alt="AccountEase Logo" class="logo-img">
+
+        <!-- Handshake Icon -->
+        <span class="handshake-icon">🤝</span>
+
+        <!-- INFIVITY Logo -->
+        <img src="/static/images/infivity-logo.png" alt="INFIVITY Logo" class="logo-img">
+    </div>
+
+    <p class="tagline">
+        Proudly created and maintained by <strong>INFIVITY</strong>.
+    </p>
+
+    <p class="content-text">
+        At INFIVITY, our mission is to empower businesses by creating intuitive, powerful, and modern software solutions. We believe in simplifying complex processes through clean design and robust technology, allowing our clients to focus on what they do best: growing their business.
+    </p>
+    <p class="content-text mt-3">
+        <strong>AccountEase</strong> is a testament to our commitment to quality and innovation in the financial technology space. It represents the perfect synergy of expert accounting principles and cutting-edge software engineering.
+    </p>
+
+    <div class="text-center mt-5">
+        <a href="https://infivity.com.np" target="_blank" class="btn btn-primary btn-lg">
+            Learn More About INFIVITY
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "shipments/shipment_list_base.html" %}
+
+
+
+{% block extra_headers %}
+    <th class="sticky-actions text-center">Actions</th>
+{% endblock %}
+
+{% block extra_columns %}
+    <td class="sticky-actions">
+        <div class="d-flex gap-2 justify-content-center">
+            <a href="{% url 'shipments:edit_shipment' shipment.id %}" class="btn-action btn-edit" title="Edit">
+                <i class="bi bi-pencil-fill"></i>
+            </a>
+            <a href="{% url 'shipments:delete_shipment' shipment.id %}" class="btn-action btn-delete" title="Delete">
+                <i class="bi bi-trash3-fill"></i>
+            </a>
+        </div>
+    </td>
+{% endblock %}

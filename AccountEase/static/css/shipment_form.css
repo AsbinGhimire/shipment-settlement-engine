@@ -1,0 +1,65 @@
+.shipment-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.form-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 1.8rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.section-title {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-control, select {
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 .15rem rgba(13,110,253,.15);
+}
+
+.amount-group select {
+    max-width: 120px;
+}
+
+.file-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.existing-file-info {
+    background: #eff6ff;
+    padding: .8rem 1rem;
+    border-radius: 8px;
+}
+
+.add-file-btn {
+    margin-top: .5rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+}

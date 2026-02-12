@@ -1,0 +1,67 @@
+
+
+/* @keyframes slideShow {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    10% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    30% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    40% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.glass {
+    background: rgba(30, 17, 41, 0.7);
+    backdrop-filter: blur(12px);
+}
+
+
+@keyframes slideShow7 {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    2% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+
+    14.2% {
+        opacity: 1;
+    }
+
+    16.2% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.slideshow-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: slideShow7 28s infinite;
+} */
